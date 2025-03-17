@@ -1,0 +1,6 @@
+packer = "1.12.0"
+terraform = "1.11.2"
+
+[plugins]
+packer = "https://raw.githubusercontent.com/b4nst/proto-plugins/main/toml/packer.toml"
+terraform = "https://raw.githubusercontent.com/theomessin/proto-toml-plugins/master/terraform.toml"
