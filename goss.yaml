@@ -1,21 +1,24 @@
 # Goss test specification for Nginx Unit
 
-# Essentially, we would get away with just testing if we get a proper response from th egiven URL,
-# but having more finegrained tests can help us pinpoint the source of the problem faster.
+# Essentially, we would get away with just testing if we get a proper response from the given URL,
+# but having more fine grained tests can help us pinpoint the source of the problem faster.
 
 # Check that the asset html file exists and has the correct size
 file:
   /www/data/index.html:
     exists: true
     size: 122
+
 # Check that the Nginx Unit service is running
 process:
   unitd:
     running: true
+
 # Check that something is listening on port 8080
 port:
   tcp:8080:
     listening: true
+
 # Check that we get the correct response from a given URL
 http:
   http://localhost:8080/index.html:
