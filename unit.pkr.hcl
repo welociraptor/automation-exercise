@@ -36,11 +36,12 @@ source "docker" "unit" {
 }
 
 build {
-  sources = ["source.docker.unit", "source.amazon-ebs.unit"]
+  sources = ["source.docker.unit"]
   provisioner "file" {
     sources = [
-      "unit.config.json",
-      "index.html"
+      "index.html",
+      "unit.repo",
+      "unit.config.json"
     ]
     destination = "/tmp/"
   }
@@ -50,15 +51,33 @@ build {
       "unit.configure.sh"
     ]
   }
-  provisioner "shell" {
-    only   = ["amazon-ebs.unit"]
-    inline = ["systemctl enable unit"]
-  }
   post-processors {
     post-processor "docker-tag" {
-      only       = ["docker.unit"]
       repository = "automation-exercise/unit"
       tags       = ["1.34.2"]
     }
+    post-processor "manifest" {}
+  }
+}
+
+build {
+  sources = ["source.amazon-ebs.unit"]
+  provisioner "file" {
+    sources = [
+      "index.html",
+      "unit.repo",
+      "unit.config.json"
+    ]
+    destination = "/tmp/"
+  }
+  provisioner "shell" {
+    scripts = [
+      "unit.install.yum.sh",
+      "unit.configure.sh",
+      "unit.enable.sh"
+    ]
+  }
+  post-processors {
+    post-processor "manifest" {}
   }
 }
