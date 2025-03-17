@@ -4,4 +4,6 @@ automation-exercise.iml
 dgoss
 goss-linux-amd64
 
-
+.terraform
+.terraform.lock.hcl
+terraform.tfstate*
