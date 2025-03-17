@@ -6,7 +6,18 @@ Following the principle of immutable infrastructure, we will be using [Packer](h
 the instance image, [Terraform](https://www.packer.io/) to deploy and [Goss](https://github.com/goss-org/goss) to
 validate that the instance is properly built.
 
-Download goss and dgoss:
+## Prerequisites
+
+- [Packer](https://www.packer.io/)
+- [Terraform](https://www.terraform.io/)
+- [Goss](https://github.com/goss-org/goss)
+- [Dgoss](https://raw.githubusercontent.com/goss-org/goss/master/extras/dgoss/dgoss)
+- Active AWS account and credentials
+
+To install Packer and Terraform, you can use the [Proto](https://moonrepo.dev/proto) toolchain manager and the
+command `proto activate`.
+
+Installing Goss and Dgoss can be done with the following commands:
 ```
 curl -L https://github.com/goss-org/goss/releases/download/v0.4.9/goss-linux-amd64 -o goss-linux-amd64
 curl -L https://raw.githubusercontent.com/goss-org/goss/master/extras/dgoss/dgoss -o dgoss
