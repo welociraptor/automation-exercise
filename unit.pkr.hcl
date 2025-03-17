@@ -40,7 +40,10 @@ build {
     destination = "/tmp/"
   }
   provisioner "shell" {
-    script = "unit.bootstrap.yum.sh"
+    scripts = [
+      "unit.install.yum.sh",
+      "unit.configure.sh"
+    ]
   }
   provisioner "shell" {
     only   = ["amazon-ebs.unit"]
