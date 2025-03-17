@@ -1,5 +1,7 @@
 #!/bin/sh -ex
 
+# This script installs Unit from the official repository.
+
 # Install unit
 cat > /etc/yum.repos.d/unit.repo << \EOF
 [unit]
