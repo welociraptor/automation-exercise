@@ -42,10 +42,13 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
-resource "aws_instance" "test" {
-  ami           = "ami-08b5b3a93ed654d19"
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.public.id
+data "aws_ami" "amazon_linux_2023" {
+  most_recent = true
+  owners      = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023.*-x86_64"]
+  }
 }
 
 output "vpc_id" {
@@ -54,4 +57,8 @@ output "vpc_id" {
 
 output "subnet_id" {
   value = aws_subnet.public.id
+}
+
+output "source_ami" {
+  value = data.aws_ami.amazon_linux_2023.id
 }
