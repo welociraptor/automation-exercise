@@ -24,7 +24,16 @@ curl -L https://raw.githubusercontent.com/goss-org/goss/master/extras/dgoss/dgos
 chmod u+x dgoss
 ```
 
+## Development
+
+Running Packer and Terraform format with a git pre-commit hook is always a good idea. To enable this, you can use the
+following commands:
+```shell
+git config --local core.hooksPath .githooks
+```
+
 Test container using dgoss:
 ```
 GOSS_FILES_STRATEGY=cp GOSS_PATH=goss-linux-amd64 ./dgoss run --rm -ti -p 8080:8080 automation-exercise/unit:1.34.2
 ```
+
