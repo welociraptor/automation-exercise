@@ -11,14 +11,19 @@ packer {
   }
 }
 
+variable "vpc_id" { type = string }
+variable "source_ami" { type = string }
+variable "subnet_id" { type = string }
+
 source "amazon-ebs" "unit" {
   ami_name      = "automation-exercise-unit-{{timestamp}}"
-  source_ami    = "ami-08b5b3a93ed654d19" # Amazon Linux 2023 AMI 2023.6.20250303.0 x86_64 HVM kernel-6.1
+  source_ami    = var.source_ami
   instance_type = "t2.micro"
   ssh_username  = "ec2-user"
+  ssh_interface = "public_ip"
   region        = "us-east-1"
-  vpc_id        = "vpc-0e26642ceb62faa8f"
-  subnet_id     = "subnet-08980452e6d4ef1dd"
+  vpc_id        = var.vpc_id
+  subnet_id     = var.subnet_id
 }
 
 source "docker" "unit" {
