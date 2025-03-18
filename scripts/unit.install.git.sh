@@ -3,7 +3,7 @@
 # This script builds Unit from source code, using version specified in environment variable VERSION.
 
 # Install dependencies
-yum install -y git gcc which pcre2-devel
+sudo yum install -y git gcc which pcre2-devel
 
 # Clone desired version from repository
 git clone -b $VERSION https://github.com/nginx/unit.git
@@ -12,7 +12,7 @@ git clone -b $VERSION https://github.com/nginx/unit.git
 cd unit
 ./configure
 make
-make install
+sudo make install
 
 # Clean up
 cd ..
