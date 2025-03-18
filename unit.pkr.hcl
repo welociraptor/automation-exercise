@@ -4,10 +4,6 @@ packer {
       version = ">= 1.3.5"
       source  = "github.com/hashicorp/amazon"
     }
-    docker = {
-      version = ">= 1.1.1"
-      source  = "github.com/hashicorp/docker"
-    }
     goss = {
       version = "~> 3"
       source  = "github.com/YaleUniversity/goss"
@@ -29,99 +25,72 @@ source "amazon-ebs" "unit" {
 }
 
 build {
-  sources "source.amazon-ebs.unit" {
-    ami_name      = "automation-exercise-yum-{{timestamp}}"
+  source "source.amazon-ebs.unit" {
+    name     = "yum"
+    ami_name = "automation-exercise-yum-{{timestamp}}"
   }
   provisioner "file" {
     sources = [
-      "index.html",
-      "unit.repo",
-      "unit.config.json"
+      "assets/index.html",
+      "assets/unit.repo",
+      "assets/unit.config.json"
     ]
     destination = "/tmp/"
   }
   provisioner "shell" {
-    scripts = [
-      "unit.install.yum.sh",
-      "unit.configure.sh",
-      "unit.enable.sh"
-    ]
-  }
-  provisioner "goss" {
-    version = "0.4.9"
-    tests   = ["goss.yaml"]
-  }
-  post-processors {
-    post-processor "manifest" {}
-  }
-}
-
-build {
-  sources "source.amazon-ebs.unit" {
-    ami_name      = "automation-exercise-git-{{timestamp}}"
-  }
-  provisioner "file" {
-    sources = [
-      "index.html",
-      "unit.repo",
-      "unit.config.json"
-    ]
-    destination = "/tmp/"
-  }
-  provisioner "shell" {
-    scripts = [
-      "unit.install.git.sh",
-      "unit.configure.sh",
-      "unit.enable.sh"
-    ]
-  }
-  provisioner "goss" {
-    version = "0.4.9"
-    tests   = ["goss.yaml"]
-  }
-  post-processors {
-    post-processor "manifest" {}
-  }
-}
-
-#
-# Build for Docker image
-#
-
-source "docker" "unit" {
-  image    = "amazonlinux:2023"
-  platform = "linux/amd64"
-  commit   = true
-  changes = [
-    "CMD [\"unitd\", \"--no-daemon\"]",
-  ]
-}
-
-build {
-  sources = ["source.docker.unit"]
-  provisioner "file" {
-    sources = [
-      "index.html",
-      "unit.repo",
-      "unit.config.json"
-    ]
-    destination = "/tmp/"
-  }
-  provisioner "shell" {
-    scripts = [
-      "unit.install.yum.sh",
-      "unit.configure.sh"
-    ]
-  }
-  provisioner "goss" {
-    version = "0.4.9"
-    tests   = ["goss.yaml"]
-  }
-  post-processors {
-    post-processor "docker-tag" {
-      repository = "automation-exercise/unit"
-      tags       = ["1.34.2"]
+    env = {
+      # The socket is in a different location in the version installed with Git
+      SOCKET_LOCATION = "/var/run/unit/control.sock"
     }
+    scripts = [
+      "scripts/unit.install.yum.sh",
+      "scripts/unit.configure.sh",
+      "scripts/unit.systemd.enable.sh"
+    ]
+  }
+  provisioner "goss" {
+    version = "0.4.9"
+    tests   = ["goss.yaml"]
+  }
+  post-processors {
+    post-processor "manifest" {}
+  }
+}
+
+
+build {
+  source "source.amazon-ebs.unit" {
+    name     = "git"
+    ami_name = "automation-exercise-git-{{timestamp}}"
+  }
+  provisioner "file" {
+    sources = [
+      "assets/index.html",
+      "assets/unit.repo",
+      "assets/unit.config.json",
+      "assets/unit.service"
+    ]
+    destination = "/tmp/"
+  }
+  provisioner "shell" {
+    env = {
+      # The socket is in a different location in the version installed with Yum
+      SOCKET_LOCATION = "/usr/local/var/run/unit/control.unit.sock"
+      # This is used in selecting which tag to clone from git
+      VERSION = "1.34.1"
+    }
+    scripts = [
+      "scripts/unit.install.git.sh",
+      "scripts/unit.configure.sh",
+      "scripts/unit.systemd.prepare.sh",
+      "scripts/unit.systemd.enable.sh"
+    ]
+  }
+  provisioner "goss" {
+    version = "0.4.9"
+    tests   = ["goss.yaml"]
+  }
+  post-processors {
     post-processor "manifest" {}
   }
 }
