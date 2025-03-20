@@ -3,8 +3,14 @@
 This repository contains an exercise in how to automate the setup of an EC2 instance that would run Nginx Unit.
 
 Following the principle of immutable infrastructure, we will be using [Packer](https://www.packer.io/) to prebake
-the instance image, [Terraform](https://www.packer.io/) to deploy and [Goss](https://github.com/goss-org/goss) to
-validate that the instance is properly built.
+the instance images, [Goss](https://github.com/goss-org/goss) to test the image during build time and Terraform to 
+validate that the image can be used to deploy an instance and works. Terraform is also used to provision infrastructure
+necessary to build the images.
+
+The application used is the Nginx Unit web server, configured to serve a minimal HTML document at port 8080.
+
+We are building two variants of the image, one which installs the server using Yum and another one that compiles
+the server from source code cloned from a Git repository.
 
 ## Repository
 
