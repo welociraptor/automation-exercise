@@ -24,3 +24,13 @@ http:
   http://localhost:8080/index.html:
     status: 200
     body: [ "Hello from Nginx Unit!", "Yes, Hello indeed." ]
+
+# This test verifies the correct Unit version for the image installed from Yum.addr:
+# WARNING: This test makes a dangerous assumption about the version number available from Yum
+# which is at the time of the writing 1.34.2. So the test will eventually stop working.
+command:
+  'version-check':
+    exit-status: 0
+    exec: "unitd --version"
+    stderr:
+      - "unit version: 1.34.2"

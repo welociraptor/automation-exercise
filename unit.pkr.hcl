@@ -50,13 +50,12 @@ build {
   }
   provisioner "goss" {
     version = "0.4.9"
-    tests   = ["goss.yaml"]
+    tests   = ["goss/yum/goss.yaml"]
   }
   post-processors {
     post-processor "manifest" {}
   }
 }
-
 
 build {
   source "source.amazon-ebs.unit" {
@@ -88,7 +87,7 @@ build {
   }
   provisioner "goss" {
     version = "0.4.9"
-    tests   = ["goss.yaml"]
+    tests   = ["goss/git/goss.yaml"]
   }
   post-processors {
     post-processor "manifest" {}
