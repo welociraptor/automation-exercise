@@ -19,10 +19,10 @@ the server from source code cloned from a Git repository.
 | .githooks/     | Pre-commit hook for running formatters                                    |
 | assets/        | Configuration files and data to be copied to the image                    |
 | bootstrap/     | Terraform configuration files for setting up AWS networking to run Packer |
+| goss/          | Test files for Goss                                                       |
 | scripts/       | Scripts used in provisioning the image                                    |
 | validate/      | Terraform configuration and test suite to validate the built images       |
 | .prototools    | Proto configuration file                                                  |
-| goss.yaml      | Test file for Goss                                                        |
 | README.md      | You're reading it!                                                        |
 | unit.pkr.hcl   | Packer configuration file                                                 |
 
