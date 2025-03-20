@@ -17,4 +17,5 @@ unit.auto.pkrvars.hcl
 # Terraform
 .terraform
 .terraform.lock.hcl
+terraform.tfvars
 terraform.tfstate*
