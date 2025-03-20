@@ -5,14 +5,8 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 3.76"
     }
-    tls = {
-      source  = "hashicorp/tls"
-      version = "4.0.6"
-    }
   }
 }
-
-provider "tls" {}
 
 provider "aws" {
   region = "us-east-1"
