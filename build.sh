@@ -12,7 +12,7 @@ echo "Building images.."
 packer build .
 
 echo "Validating images.."
-cp unit.auto.pkrvars.hcl > ./validate/terraform.tfvars
+cp unit.auto.pkrvars.hcl ./validate/terraform.tfvars
 pushd validate
 terraform init
 terraform test
