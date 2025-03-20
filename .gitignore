@@ -1,9 +1,20 @@
+# Environment variables for direnv
 .envrc
+
+# Jetbrains IDEA configuration
 .idea
 automation-exercise.iml
-dgoss
-goss-linux-amd64
 
+# Goss runtime
+*goss-spec.yaml
+
+# Packer
+packer-manifest.json
+
+# Runtime variales for Packer, generated using Terraform (or manually set)
+unit.auto.pkrvars.hcl
+
+# Terraform
 .terraform
 .terraform.lock.hcl
 terraform.tfstate*
