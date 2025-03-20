@@ -8,16 +8,17 @@ validate that the instance is properly built.
 
 ## Repository
 
-| File or folder | Description                                                             |
-|----------------|-------------------------------------------------------------------------|
-| .githooks/     | Pre-commit hook for running formatters                                  |
-| assets/        | Configuration files and data to be copied to the image                  |
-| scripts/       | Scripts used in provisioning the image                                  |
-| terraform/     | Configuration files for setting up AWS networking and testing the image |
-| .prototools    | Proto configuration file                                                |
-| goss.yaml      | Test file for Goss                                                      |
-| README.md      | You're reading it!                                                      |
-| unit.pkr.hcl   | Packer configuration file                                               |
+| File or folder | Description                                                               |
+|----------------|---------------------------------------------------------------------------|
+| .githooks/     | Pre-commit hook for running formatters                                    |
+| assets/        | Configuration files and data to be copied to the image                    |
+| bootstrap/     | Terraform configuration files for setting up AWS networking to run Packer |
+| scripts/       | Scripts used in provisioning the image                                    |
+| validate/      | Terraform configuration and test suite to validate the built images       |
+| .prototools    | Proto configuration file                                                  |
+| goss.yaml      | Test file for Goss                                                        |
+| README.md      | You're reading it!                                                        |
+| unit.pkr.hcl   | Packer configuration file                                                 |
 
 ## Prerequisites
 
@@ -25,8 +26,12 @@ validate that the instance is properly built.
 - [Terraform](https://www.terraform.io/)
 - Active AWS account and credentials
 
-To install Packer and Terraform, you can use the [Proto](https://moonrepo.dev/proto) toolchain manager and the
-command `proto activate`.
+To install Packer and Terraform, you can use the [Proto](https://moonrepo.dev/proto) toolchain manager.
+
+## Running the test suite
+
+Run `build.sh` from the repository root. Terraform will ask confirmation to apply the changes in the first step when
+provisioning the network infrastructure.
 
 ## Development
 
