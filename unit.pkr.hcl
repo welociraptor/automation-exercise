@@ -52,9 +52,6 @@ build {
     version = "0.4.9"
     tests   = ["goss/yum/goss.yaml"]
   }
-  post-processors {
-    post-processor "manifest" {}
-  }
 }
 
 build {
@@ -88,8 +85,5 @@ build {
   provisioner "goss" {
     version = "0.4.9"
     tests   = ["goss/git/goss.yaml"]
-  }
-  post-processors {
-    post-processor "manifest" {}
   }
 }
