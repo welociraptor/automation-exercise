@@ -1,4 +1,5 @@
 #!/bin/sh -e
 
 packer fmt .
-terraform fmt .
+terraform fmt bootstrap/
+terraform fmt validate/
